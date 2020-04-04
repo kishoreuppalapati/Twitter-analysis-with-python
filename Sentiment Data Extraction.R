@@ -54,6 +54,7 @@ access_Secret <- "Q55FxITLmzlJWW4xpNbwnsW2UPXQZL4KiOWf9QdsDlYKt"
 # Create Twitter connection
 setup_twitter_oauth(consumerKey,consumerSecret,access_Token,access_Secret)
 
+
 #Objectname <- searchTwitter(searchString, n=no.of tweets, lang=NULL)
 # 
 namo <- searchTwitter('narendra modi', n=3000, lang="en")
@@ -67,25 +68,16 @@ namo <- searchTwitter('narendra modi', n=3000, lang="en")
 
 no.of.tweets <- 1000
 
-ktk <- searchTwitter('#karnatka', n=no.of.tweets, lang="en")
-ktk2 <- searchTwitter('#karnatkaelections2018', n=no.of.tweets, lang="en")
-ktk3 <- searchTwitter('#karnatkaelection', n=no.of.tweets, lang="en")
-ktk4 <- searchTwitter('#battleforkarnatka', n=no.of.tweets, lang="en")
-ktk5 <- searchTwitter('#karnatkakurukshetra', n=no.of.tweets, lang="en")
-ktk6 <- searchTwitter('#KarnatkaAssembly', n=no.of.tweets, lang="en")
-ktk7 <- searchTwitter('#karnatkavoting', n=no.of.tweets, lang="en")
-ktk8 <- searchTwitter('#karnatkapolling', n=no.of.tweets, lang="en")
-bjp <- searchTwitter('bjp', n=10000, lang="en")
-congress <- searchTwitter('congress', n=2000, lang="en")
-namo <- searchTwitter('narendra modi', n=2000, lang="en")
-raga <- searchTwitter('rahul gandhi', n=2000, lang="en")
+
+corona <- searchTwitter('corona', n=2000, lang="en")
+covid <- searchTwitter('#covid19', n=2000, lang="en")
 
 install.packages("SnowballC")
 library(wordcloud)
 library(SnowballC)
 library(tm)
 namo
-namo_text <- sapply(namo, function(x) x$getText())
+namo_text <- sapply(corona, function(x) x$getText())
 namo_text_corpus <- iconv(namo_text, 'UTF-8', 'ASCII')
 
 namo_text_corpus <- Corpus(VectorSource(namo_text))
@@ -116,7 +108,7 @@ namo_text_corpus <- tm_map(namo_text_corpus, removeWords, c('RT', 'are','that'))
 
 removeURL <- function(x) gsub('http[[:alnum:]]*', '', x)
 namo_text_corpus <- tm_map(namo_text_corpus, content_transformer(removeURL))
-
+wordcloud(namo_text_corpus, min.freq=25, max.words=500, random.order=FALSE, scale= c(5, 0.1), colors=brewer.pal(8,"Dark2"))
 
 #insta_2 <- TermDocumentMatrix(namo_text_corpus)
 #insta_2 <- as.matrix(insta_2)
